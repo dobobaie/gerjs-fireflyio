@@ -1,0 +1,260 @@
+openapi: 3.0.0
+servers:
+  - url: 'http://localhost:5656/'
+info:
+  version: "1.0.0"
+  title: "Swagger documentation"
+  description: "Retrieve all information from the API inside this documents."
+paths:
+  /:
+    get:
+      description: ""
+      responses:
+        '200':
+          description: "Introduce the service"
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ResponseGET'
+  /health:
+    get:
+      description: ""
+      tags:
+        - default
+      responses:
+        '200':
+          description: "Verify if the service is working"
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ResponseGETHealth'
+  /users/create:
+    post:
+      description: ""
+      tags:
+        - users
+      requestBody:
+        $ref: '#/components/requestBodies/POSTUsersCreate'
+      responses:
+        '200':
+          description: "Create a new user with a simple right"
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Status'
+  /users/list:
+    get:
+      description: ""
+      tags:
+        - users
+      parameters:
+      - name: token
+        in: query
+        description: ""
+        required: false
+        schema:
+          type: string
+          minLength: 12
+          maxLength: 30
+      responses:
+        '200':
+          description: "Retrieve a list of users"
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ResponseGETUsersList'
+  /users/login:
+    post:
+      description: ""
+      tags:
+        - users
+      requestBody:
+        $ref: '#/components/requestBodies/POSTUsersLogin'
+      responses:
+        '200':
+          description: "Process to a log in request"
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ResponsePOSTUsersLogin'
+  /users/{user_id}:
+    get:
+      description: ""
+      tags:
+        - users
+      parameters:
+      - name: token
+        in: query
+        description: ""
+        required: false
+        schema:
+          type: string
+          minLength: 12
+          maxLength: 30
+      - name: user_id
+        in: path
+        description: ":user_id parameter"
+        required: true
+      responses:
+        '200':
+          description: "Retrieve an user"
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ResponseGETUsersUserId'
+    put:
+      description: ""
+      tags:
+        - users
+      parameters:
+      - name: token
+        in: query
+        description: ""
+        required: false
+        schema:
+          type: string
+          minLength: 12
+          maxLength: 30
+      - name: user_id
+        in: path
+        description: ":user_id parameter"
+        required: true
+      requestBody:
+        $ref: '#/components/requestBodies/PUTUsersUserId'
+      responses:
+        '200':
+          description: "Update the user's information"
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Status'
+    delete:
+      description: ""
+      tags:
+        - users
+      parameters:
+      - name: token
+        in: query
+        description: ""
+        required: false
+        schema:
+          type: string
+          minLength: 12
+          maxLength: 30
+      - name: user_id
+        in: path
+        description: ":user_id parameter"
+        required: true
+      responses:
+        '200':
+          description: "Delete an user"
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Status'
+components:
+  requestBodies:
+     POSTUsersCreate:
+      description: ""
+      required: true
+      content:
+       application/json:
+        schema:
+         $ref: '#/components/schemas/POSTUsersCreate'
+     POSTUsersLogin:
+      description: ""
+      required: false
+      content:
+       application/json:
+        schema:
+         $ref: '#/components/schemas/POSTUsersLogin'
+     PUTUsersUserId:
+      description: ""
+      required: true
+      content:
+       application/json:
+        schema:
+         $ref: '#/components/schemas/PUTUsersUserId'
+  schemas:
+    ResponseGET:
+      type: "object"
+      properties:
+        message:
+          type: "string"
+    ResponseGETHealth:
+      type: "object"
+      properties:
+        status:
+          type: "string"
+    POSTUsersCreate:
+      type: "object"
+      properties:
+        first_name:
+          type: "string"
+        last_name:
+          type: "string"
+        email:
+          type: "string"
+        password:
+          type: "string"
+    Status:
+      type: "object"
+      properties:
+        status:
+          type: "string"
+    ResponseGETUsersList:
+      type: "object"
+      properties:
+        list:
+          type: "array"
+          items:
+            type: "object"
+            $ref: '#/components/schemas/LightInfosUser'
+    LightInfosUser:
+      type: "object"
+      properties:
+        id:
+          type: "string"
+        account_id:
+          type: "string"
+        user_id:
+          type: "string"
+        email:
+          type: "string"
+        first_name:
+          type: "string"
+        last_name:
+          type: "string"
+        is_verified:
+          type: "boolean"
+        is_admin:
+          type: "boolean"
+    POSTUsersLogin:
+      type: "object"
+      properties:
+        email:
+          type: "string"
+        password:
+          type: "string"
+    ResponsePOSTUsersLogin:
+      type: "object"
+      properties:
+        access_token:
+          type: "string"
+    ResponseGETUsersUserId:
+      type: "object"
+      properties:
+        user:
+          type: "object"
+          $ref: '#/components/schemas/LightInfosUser'
+    PUTUsersUserId:
+      type: "object"
+      properties:
+        first_name:
+          type: "string"
+        last_name:
+          type: "string"
+        email:
+          type: "string"
+        password:
+          type: "string"

@@ -1,0 +1,156 @@
+openapi: 3.0.0
+servers:
+  - url: 'http://localhost:5050/'
+info:
+  version: "1.0.0"
+  title: "Example Koa GerJs Server Swagger"
+  description: "In this Swagger document, you can retrieve each route available"
+paths:
+  /users/{id}:
+    put:
+      description: "This is the main description"
+      tags:
+        - users
+      parameters:
+      - name: token
+        in: query
+        description: ""
+        required: true
+        schema:
+          type: string
+          minLength: 12
+          maxLength: 30
+      - name: id
+        in: path
+        description: ":id parameter"
+        required: true
+      requestBody:
+        $ref: '#/components/requestBodies/PUTUsersId'
+      responses:
+        '200':
+          description: "Response description"
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Classic'
+  /users:
+    post:
+      description: ""
+      tags:
+        - users
+      requestBody:
+        $ref: '#/components/requestBodies/POSTUsers'
+      responses:
+        '200':
+          description: ""
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Classic'
+    get:
+      description: ""
+      tags:
+        - users
+      parameters:
+      - name: token
+        in: query
+        description: ""
+        required: true
+        schema:
+          type: string
+          minLength: 12
+          maxLength: 30
+      responses:
+        '200':
+          description: ""
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ResponseGETUsers'
+  /:
+    get:
+      description: ""
+      responses:
+        '200':
+          description: ""
+          content:
+            text/plain:
+              schema:
+                type: string
+                default: "Default reponse"
+components:
+  requestBodies:
+     PUTUsersId:
+      description: ""
+      required: true
+      content:
+       application/json:
+        schema:
+         $ref: '#/components/schemas/PUTUsersId'
+     POSTUsers:
+      description: ""
+      required: true
+      content:
+       application/json:
+        schema:
+         $ref: '#/components/schemas/POSTUsers'
+  schemas:
+    PUTUsersId:
+      type: "object"
+      properties:
+        username:
+          type: "string"
+        lastname:
+          type: "string"
+    Classic:
+      type: "object"
+      properties:
+        message:
+          type: "string"
+        result:
+          type: "boolean"
+    POSTUsers:
+      type: "array"
+      items:
+        type: "object"
+        $ref: '#/components/schemas/POSTUsersItems'
+    POSTUsersItems:
+      type: "object"
+      properties:
+        username:
+          type: "string"
+        age:
+          type: "number"
+          minimum: 20
+          maximum: 70
+        firstname:
+          type: "string"
+        lastname:
+          type: "string"
+    ResponseGETUsers:
+      type: "array"
+      items:
+        type: "object"
+        $ref: '#/components/schemas/ResponseGETUsersItems'
+    ResponseGETUsersItems:
+      type: "object"
+      properties:
+        test:
+          type: "object"
+          $ref: '#/components/schemas/Classic'
+        test2:
+          type: "array"
+          items:
+            type: "object"
+            $ref: '#/components/schemas/Token'
+        firstname:
+          type: "string"
+        lastname:
+          type: "string"
+    Token:
+      type: "object"
+      properties:
+        token:
+          type: "string"
+          minLength: 12
+          maxLength: 30

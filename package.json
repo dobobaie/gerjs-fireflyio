@@ -1,0 +1,42 @@
+{
+  "name": "gerjs-fireflyio",
+  "version": "0.1.0",
+  "description": "Use gerJs library with Joi models validation + reformat input/ouput payload to API",
+  "main": "lib/index.js",
+  "scripts": {
+    "test": "nyc ava --serial --verbose"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/dobobaie/gerjs-fireflyio.git"
+  },
+  "keywords": [
+    "swagger",
+    "js",
+    "openapi",
+    "joi",
+    "documentation",
+    "koa",
+    "koa2"
+  ],
+  "author": "dobobaie",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/dobobaie/gerjs-fireflyio/issues"
+  },
+  "homepage": "https://github.com/dobobaie/gerjs-fireflyio#readme",
+  "dependencies": {
+    "gerjs-core": "0.0.5"
+  },
+  "devDependencies": {
+    "@hapi/joi": "^16.1.8",
+    "ava": "^2.1.0",
+    "ava-http": "^1.0.0",
+    "nyc": "^14.1.1"
+  },
+  "ava": {
+    "files": [
+      "tests/*.test.js"
+    ]
+  }
+}
